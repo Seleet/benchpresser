@@ -1,3 +1,7 @@
+function roundToNearestTwoPointFive(number) {
+  return Math.round(number / 2.5) * 2.5;
+}
+
 const form = document.getElementById("rm-form");
 
 form.addEventListener("submit", function (event) {
@@ -25,7 +29,7 @@ form.addEventListener("submit", function (event) {
     const weightAtPercent = oneRM * (percent / 100);
 
     td1.textContent = percent + "%";
-    td2.textContent = weightAtPercent.toFixed(1);
+    td2.textContent = roundToNearestTwoPointFive(weightAtPercent).toFixed(1);
 
     tr.appendChild(td1);
     tr.appendChild(td2);
@@ -42,8 +46,8 @@ form.addEventListener("submit", function (event) {
 
     const weightAtReps = oneRM / (1 + r / 30);
 
-    td1.textContent = r;
-    td2.textContent = weightAtReps.toFixed(1);
+    td1.textContent = r + " Reps";
+    td2.textContent = roundToNearestTwoPointFive(weightAtReps).toFixed(1);
 
     tr.appendChild(td1);
     tr.appendChild(td2);
