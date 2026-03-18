@@ -3,56 +3,65 @@ function roundToNearestTwoPointFive(number) {
 }
 
 const form = document.getElementById("rm-form");
+const oneRepMaxOutput = document.getElementById("one-rep-max");
+const percentageBody = document.getElementById("percentage-body");
+const repmaxBody = document.getElementById("repmax-body");
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
-  const weight = parseFloat(document.getElementById("weight").value);
-  const reps = parseInt(document.getElementById("reps").value);
-  const tableBody = document.getElementById("percentage-body");
-  tableBody.innerHTML = "";
+  // 🔥 FIX: hantera både , och .
+  const weightInput = document.getElementById("weight").value;
+  const weight = parseFloat(weightInput.replace(/,/g, "."));
+
+  const reps = parseInt(document.getElementById("reps").value, 10);
+
+  if (isNaN(weight) || isNaN(reps) || weight <= 0 || reps <= 0) {
+    oneRepMaxOutput.textContent = "-";
+    percentageBody.innerHTML = "";
+    repmaxBody.innerHTML = "";
+    return;
+  }
 
   const oneRM = weight * (1 + reps / 30);
-  const oneRepMaxOutput = document.getElementById("one-rep-max");
+  const roundedOneRM = roundToNearestTwoPointFive(oneRM);
 
-  oneRepMaxOutput.textContent = oneRM.toFixed(1);
+  oneRepMaxOutput.textContent = roundedOneRM.toFixed(1) + " kg";
 
-  console.log(oneRM);
+  percentageBody.innerHTML = "";
+  repmaxBody.innerHTML = "";
 
   const percentages = [100, 95, 90, 85, 80, 75, 70, 65, 60];
 
   percentages.forEach(function (percent) {
     const tr = document.createElement("tr");
-    const td1 = document.createElement("td");
-    const td2 = document.createElement("td");
+    const tdPercent = document.createElement("td");
+    const tdWeight = document.createElement("td");
 
     const weightAtPercent = oneRM * (percent / 100);
+    const roundedWeight = roundToNearestTwoPointFive(weightAtPercent);
 
-    td1.textContent = percent + "%";
-    td2.textContent =
-      roundToNearestTwoPointFive(weightAtPercent).toFixed(1) + " kg";
+    tdPercent.textContent = percent + "%";
+    tdWeight.textContent = roundedWeight.toFixed(1) + " kg";
 
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tableBody.appendChild(tr);
+    tr.appendChild(tdPercent);
+    tr.appendChild(tdWeight);
+    percentageBody.appendChild(tr);
   });
-
-  const repTableBody = document.getElementById("repmax-body");
-  repTableBody.innerHTML = "";
 
   for (let r = 1; r <= 10; r++) {
     const tr = document.createElement("tr");
-    const td1 = document.createElement("td");
-    const td2 = document.createElement("td");
+    const tdReps = document.createElement("td");
+    const tdWeight = document.createElement("td");
 
     const weightAtReps = oneRM / (1 + r / 30);
+    const roundedWeight = roundToNearestTwoPointFive(weightAtReps);
 
-    td1.textContent = r + " Reps";
-    td2.textContent =
-      roundToNearestTwoPointFive(weightAtReps).toFixed(1) + " kg";
+    tdReps.textContent = r + " reps";
+    tdWeight.textContent = roundedWeight.toFixed(1) + " kg";
 
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    repTableBody.appendChild(tr);
+    tr.appendChild(tdReps);
+    tr.appendChild(tdWeight);
+    repmaxBody.appendChild(tr);
   }
 });

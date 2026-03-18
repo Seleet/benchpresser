@@ -1,0 +1,43 @@
+/* RESET + BAS */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+}
+
+/* CARD */
+.calculator {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+
+  width: 100%;
+  max-width: 500px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* TYPO */
+h1 {
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+section {
+  margin-top: 25px;
+}
