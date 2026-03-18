@@ -32,11 +32,21 @@ form.addEventListener("submit", function (event) {
     tableBody.appendChild(tr);
   });
 
-const repTableBody = document.getElementById("repmax-body");
+  const repTableBody = document.getElementById("repmax-body");
+  repTableBody.innerHTML = "";
 
+  for (let r = 1; r <= 10; r++) {
+    const tr = document.createElement("tr");
+    const td1 = document.createElement("td");
+    const td2 = document.createElement("td");
 
+    const weightAtReps = oneRM / (1 + r / 30);
 
+    td1.textContent = r;
+    td2.textContent = weightAtReps.toFixed(1);
 
-
-
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    repTableBody.appendChild(tr);
+  }
 });
